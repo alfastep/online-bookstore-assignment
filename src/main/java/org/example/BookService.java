@@ -19,7 +19,11 @@ public class BookService {
     public boolean purchaseBook(User user, Book book) {
         // In real world, this should check user's balance, availability of the book, and then make a transaction
         // But for now, we just check if the book exists in our "database"
-        return bookDatabase.contains(book);
+        if (bookDatabase.contains(book)) {
+            user.getPurchasedBooks().add(book);
+            return true;
+        }
+        return false;
     }
 
     public boolean addBookReview(User user, Book book, String review) {
@@ -43,5 +47,9 @@ public class BookService {
 
     public boolean removeBook(Book book) {
         return bookDatabase.remove(book); // Book removed successfully if it was in the database
+    }
+
+    public List<Book> getBookDatabase() {
+        return bookDatabase;
     }
 }

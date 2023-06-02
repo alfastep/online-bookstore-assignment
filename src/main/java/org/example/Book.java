@@ -66,4 +66,9 @@ public class Book {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public void addReview(String review) {
+        reviews.add(review);
+    }
+
 }

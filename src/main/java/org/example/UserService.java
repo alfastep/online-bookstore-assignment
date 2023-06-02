@@ -31,17 +31,26 @@ public class UserService {
     }
 
     public boolean updateUserProfile(User user, String newUsername, String newPassword, String newEmail) {
-        // logic to update user profile
-        if (userDatabase.containsKey(newUsername)) {
+        if (!getUserDatabase().containsKey(user.getUsername())) {
+            return false; // User not found
+        }
+
+        if (getUserDatabase().containsKey(newUsername) && !newUsername.equals(user.getUsername())) {
             return false; // New username is already taken
         }
 
+        getUserDatabase().remove(user.getUsername()); // Remove old entry
         user.setUsername(newUsername);
         user.setPassword(newPassword);
         user.setEmail(newEmail);
 
-        userDatabase.put(newUsername, user);
+        getUserDatabase().put(newUsername, user); // Add updated entry
         return true; // User profile updated successfully
     }
 
+
+
+    public Map<String, User> getUserDatabase() {
+        return userDatabase;
+    }
 }
